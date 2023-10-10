@@ -5,7 +5,7 @@ import java.util.Observable;
 
 
 /** The state of a game of 2048.
- *  @author TODO: YOUR NAME HERE
+ *  @author TODO: agility6
  */
 public class Model extends Observable {
     /** Current contents of the board. */
@@ -138,6 +138,21 @@ public class Model extends Observable {
      * */
     public static boolean emptySpaceExists(Board b) {
         // TODO: Fill in this function.
+        /**
+         * 判断Board是否是空
+         * 使用tile函数和size函数
+         * 使用tile传入col row得到当前位置上的值
+         * 如果当前的值是空的话返回null
+         */
+
+        for (int i = 0; i < b.size(); i++) {
+            for (int j = 0; j < b.size(); j++) {
+                if (b.tile(j, i) == null) {
+                    return true;
+                }
+            }
+        }
+
         return false;
     }
 
@@ -148,6 +163,18 @@ public class Model extends Observable {
      */
     public static boolean maxTileExists(Board b) {
         // TODO: Fill in this function.
+
+        /**
+         *  如果当前的值等于2024最大值则返回true
+         *  使用tile函数获取当前的位置的值
+         *  当前位置不能为null，满足则获取value()判断
+         */
+
+        for (int i = 0; i < b.size(); i++) {
+            for (int j = 0; j < b.size(); j++) {
+                if (b.tile(j, i) != null && b.tile(j, i).value() == MAX_PIECE) return true;
+            }
+        }
         return false;
     }
 
@@ -159,6 +186,47 @@ public class Model extends Observable {
      */
     public static boolean atLeastOneMoveExists(Board b) {
         // TODO: Fill in this function.
+
+        /**
+         *  当board存在空格则一定可以移动
+         *  当board不存空格
+         *      - 只需要判断当前位置的 左边和下面的值是否相同
+         *      - 边界特判
+         */
+
+        if (emptySpaceExists(b)) return true;
+
+        for (int i = 0; i < b.size(); i++) {
+            for (int j = 0; j < b.size(); j++) {
+
+                int currentValue = b.tile(j, i).value();
+
+                // 循环到最后的元素直接退出
+                if (i == b.size() - 1 && j == b.size() - 1) break;
+
+                // 遍历到最后一列，只需要判断下面的元素是否相等
+                if (j == b.size() - 1) {
+                    if (b.tile(j, i + 1).value() == currentValue) {
+                        return true;
+                    }
+                    continue;
+                }
+
+                // 遍历到最后一行，只需要判断左边的元素是否相等
+                if (i == b.size() - 1) {
+                    if (b.tile(j + 1, i).value() == currentValue) {
+                        return true;
+                    }
+                    continue;
+                }
+
+                // 判断左边和下面的元素是否相等
+                if ((b.tile(j, i + 1).value() == currentValue) ||
+                        (b.tile(j + 1, i).value() == currentValue)
+                ) return true;
+            }
+        }
+
         return false;
     }
 

@@ -24,7 +24,7 @@ public class ArrayDequeTest {
         ad1.addLast("back");
         assertEquals(3, ad1.size());
 
-        System.out.println("---------- Done ----------");
+        System.out.println("addIsEmptySizeTest Done");
     }
 
     @Test
@@ -38,6 +38,7 @@ public class ArrayDequeTest {
         ad1.removeFirst();
         assertTrue("ad1 should be empty after removal", ad1.isEmpty());
 
+        System.out.println("addRemoveTest Done");
     }
 
     @Test
@@ -62,6 +63,30 @@ public class ArrayDequeTest {
 
         assertEquals("2", ad1.removeLast());
         assertEquals(1, ad1.size());
+
+        System.out.println("removeLastTest Done");
+    }
+
+    @Test
+    public void removeFirstTest() {
+
+        ArrayDeque<String> ad1 = new ArrayDeque<>();
+
+        ad1.addFirst("1");
+        ad1.addFirst("2");
+        ad1.addFirst("3");
+        ad1.addFirst("4");
+        ad1.addFirst("5");
+        ad1.addFirst("6");
+
+        assertEquals("6", ad1.removeFirst());
+        assertEquals("5", ad1.removeFirst());
+        assertEquals("4", ad1.removeFirst());
+        assertEquals("3", ad1.removeFirst());
+        assertEquals("2", ad1.removeFirst());
+        assertEquals("1", ad1.removeFirst());
+
+        System.out.println("removeFirst Done");
     }
 
     @Test
@@ -76,5 +101,7 @@ public class ArrayDequeTest {
         ad1.addLast("5");
 
         assertEquals("5", ad1.get(4));
+
+        System.out.println("getArrayDequeTest Done");
     }
 }

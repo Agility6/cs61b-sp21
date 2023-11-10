@@ -77,7 +77,7 @@ public class ArrayDeque<T> implements Deque<T>{
     public T removeFirst() {
         if (isEmpty()) return null;
         size -= 1;
-        if (nextLast >= items.length - 1) nextFirst = 0;
+        if (nextFirst >= items.length - 1) nextFirst = -1;
         return items[++nextFirst];
     }
 

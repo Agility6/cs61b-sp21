@@ -128,12 +128,17 @@ public class Model extends Observable {
          */
 
         board.setViewingPerspective(side);
-
+        int[] backup = new int[4];
         for (int c = board.size() - 1; c >= 0; c--) {
             // 记录当前列的元素
             int[] x = new int[4];
             // 记录合并的次数
             int len = 0;
+
+            for (int i = 3; i >= 0 ; i--) {
+                if (this.tile(c, i) != null) backup[i] = this.tile(c, i).value();
+            }
+
             // 将顶行数据存入到辅助数组中
             if (board.tile(c, 3) != null) x[3] = board.tile(c, 3).value();
             for (int r = board.size() - 2 ; r >= 0; r--) {
@@ -144,7 +149,7 @@ public class Model extends Observable {
                     // 添加到辅助数组中
                     x[r] = currentValue;
                     // 判断移动的位置
-                    int moveStep = getMoveStep(x, c, r, currentValue, len);
+                    int moveStep = getMoveStep(x, c, r, currentValue, len, backup);
                     /**
                      * 移动到某个行的位置上如果不为null说明元素进行结合
                      * 且移动的位置不能不变
@@ -195,16 +200,31 @@ public class Model extends Observable {
      * @param currentValue
      * @return
      */
-    private int getMoveStep(int[] x, int col, int row, int currentValue, int len) {
+    private int getMoveStep(int[] x, int col, int row, int currentValue, int len, int[] backup) {
 
         // 记录移动到多少行
-        int res = 0;
+        int res = row;
 
-        for (res = row; res < x.length - 1 - len; res++) {
+        // 判断是否遍历到最后一行
+        if (row == 0) {
+            // 计算原始数组中的有效元素
+            int backupIndex = 0;
+
+            for (int i = 0; i < backup.length; i++) {
+                if (backup[i] != 0) backupIndex++;
+            }
+
+            // 如果有效元素等于4则说明只需要检查currentValue和上一个元素是否相等,且和边界值相等
+            if (row == 0 && backupIndex == 4 && currentValue == x[x.length - 1 - len]) {
+                if (backup[1] != currentValue) res = row - 1;
+            }
+        }
+
+        for (int i = row; i < x.length - 1 - len; res++, i++) {
             // 当前位置上的元素不等于上面的元素且上一个元素不等于零则不动
-            if (currentValue != x[res + 1] && x[res + 1] != 0) return res;
+            if (currentValue != x[i + 1] && x[i + 1] != 0) return res;
             // 当前元素等于上一个元素 当起行+1
-            else if (currentValue == x[res + 1]) return res + 1;
+            else if (currentValue == x[i + 1]) return res + 1;
         }
         return res;
     }

@@ -13,27 +13,34 @@ public class MaxArrayDeque<T> extends ArrayDeque<T> {
 
     public T max() {
 
-        if (isEmpty()) return null;
+        if (isEmpty()) {
+            return null;
+        }
         T maxItem = this.get(0);
         for (T i : this) {
             // o1 > o2 return positive integer
-            if (cmp.compare(i, maxItem) > 0) maxItem = i;
+            if (cmp.compare(i, maxItem) > 0) {
+                maxItem = i;
+            }
         }
         return maxItem;
     }
 
-     public T max(Comparator<T> c) {
+    public T max(Comparator<T> c) {
 
-        if (isEmpty()) return null;
+        if (isEmpty()) {
+            return null;
+        }
+
         T max = this.get(0);
         for (T i : this) {
             if (c.compare(i, max) > 0) max = i;
         }
 
         return max;
-     }
+    }
 
-    public static void main(String[] args) {
+    private static void main(String[] args) {
 
         // 匿名内部类
         Comparator<Integer> cmp = new Comparator<>() {

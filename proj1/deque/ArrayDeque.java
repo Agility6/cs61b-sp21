@@ -28,7 +28,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         }
         nextLast = nextLastIndex;
 
-        for (int i = items.length - 1; items[i] != null ; i--) {
+        for (int i = items.length - 1; items[i] != null; i--) {
             newItems[nextFirstIndex--] = items[i];
         }
         nextFirst = nextFirstIndex;
@@ -40,14 +40,15 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     @Override
     public void addFirst(T item) {
 
-       if (nextLast == nextFirst) {
+        if (nextLast == nextFirst) {
            resize(items.length * 2);
-       }
+        }
 
-       if (nextFirst < 0)   nextFirst = items.length - 1;
+        if (nextFirst < 0)   nextFirst = items.length - 1;
 
-       items[nextFirst--] = item;
-       size += 1;
+        items[nextFirst--] = item;
+        size += 1;
+
     }
 
     @Override
@@ -57,7 +58,9 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
             resize(items.length * 2);
         }
 
-        if (nextLast >= items.length) nextLast = 0;
+        if (nextLast >= items.length) {
+            nextLast = 0;
+        }
 
         items[nextLast++] = item;
         size += 1;
@@ -77,17 +80,25 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
 
     @Override
     public T removeFirst() {
-        if (isEmpty()) return null;
+        if (isEmpty()) {
+            return null;
+        }
         size -= 1;
-        if (nextFirst >= items.length - 1) nextFirst = -1;
+        if (nextFirst >= items.length - 1) {
+            nextFirst = -1;
+        }
         return items[++nextFirst];
     }
 
     @Override
     public T removeLast() {
-        if (isEmpty()) return null;
+        if (isEmpty()) {
+            return null;
+        }
         size -= 1;
-        if (nextLast <= 0) nextLast = items.length;
+        if (nextLast <= 0) {
+            nextLast = items.length;
+        }
         return items[--nextLast];
     }
 
@@ -127,8 +138,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
 
         }
     }
-
-    public static void main(String[] args) {
+    private static void main(String[] args) {
 
         ArrayDeque<String> ad = new ArrayDeque<>();
         ad.addFirst("1");

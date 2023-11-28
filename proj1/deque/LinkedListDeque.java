@@ -99,7 +99,9 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
 
         int count = 0;
         for (Node p = sentinel.next; p.item != null; p = p.next) {
-            if (count == index) return p.item;
+            if (count == index) {
+                return p.item;
+            }
             count++;
         }
 
@@ -122,7 +124,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
         return getRecurHelper(index, 0, p);
     }
 
-    public T getRecurHelper(int index, int nodeIndex, Node p) {
+    private T getRecurHelper(int index, int nodeIndex, Node p) {
 
         if (p.item == null) {
             return null;
@@ -145,7 +147,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
 
         private int wizPos;
 
-        public LinkedListDequeIterator() {
+        private LinkedListDequeIterator() {
             wizPos = 0;
         }
 

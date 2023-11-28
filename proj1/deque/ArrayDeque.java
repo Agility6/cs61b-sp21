@@ -41,10 +41,12 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     public void addFirst(T item) {
 
         if (nextLast == nextFirst) {
-           resize(items.length * 2);
+            resize(items.length * 2);
         }
 
-        if (nextFirst < 0)   nextFirst = items.length - 1;
+        if (nextFirst < 0) {
+            nextFirst = items.length - 1;
+        }
 
         items[nextFirst--] = item;
         size += 1;
@@ -121,7 +123,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
 
         private int wizPos;
 
-        public ArrayDequeIterator() {
+        private ArrayDequeIterator() {
             wizPos = 0;
         }
 

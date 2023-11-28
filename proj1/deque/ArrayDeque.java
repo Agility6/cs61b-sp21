@@ -138,6 +138,38 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
 
         }
     }
+
+    @Override
+    public boolean equals(Object obj) {
+
+        if (obj == null) {
+            return false;
+        }
+
+        if (obj == this) {
+            return true;
+        }
+
+        if (!(obj instanceof Deque)) {
+            return false;
+        }
+
+        ArrayDeque<T> oa = (ArrayDeque<T>) obj;
+
+        if (oa.size != this.size()) {
+            return false;
+        }
+
+        for (int i = 0; i < size; i++) {
+            if (!(oa.get(i).equals(this.get(i)))) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+
     private static void main(String[] args) {
 
         ArrayDeque<String> ad = new ArrayDeque<>();
@@ -156,6 +188,19 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
             String s = seer.next();
             System.out.println(s);
         }
+
+        ArrayDeque<String> ad1 = new ArrayDeque<>();
+        ArrayDeque<String> ad2 = new ArrayDeque<>();
+
+        ad1.addFirst("1");
+        ad1.addFirst("2");
+        ad1.addFirst("3");
+
+        ad2.addFirst("1");
+        ad2.addFirst("2");
+        ad2.addFirst("4");
+
+        System.out.println(ad1.equals(ad2));
 
     }
 }

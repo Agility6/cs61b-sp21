@@ -162,6 +162,30 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
         }
     }
 
+    @Override
+    public boolean equals(Object obj) {
+
+        if (obj == null) {
+            return false;
+        }
+
+        if (obj == this) {
+            return true;
+        }
+
+        if (!(obj instanceof Deque)) {
+            return false;
+        }
+
+        LinkedListDeque<T> o = (LinkedListDeque<T>) obj;
+        for (int i = 0; i < size; i++) {
+            if (!o.get(i).equals(this.get(i))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     private static void main(String[] args) {
 
         LinkedListDeque<String> lld = new LinkedListDeque<>();
@@ -180,5 +204,17 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
             String s = seer.next();
             System.out.println(s);
         }
+
+        LinkedListDeque<String> lld2 = new LinkedListDeque<>();
+        lld2.addFirst("1");
+        lld2.addFirst("2");
+        lld2.addFirst("3");
+
+        LinkedListDeque<String> lld3 = new LinkedListDeque<>();
+        lld3.addFirst("1");
+        lld3.addFirst("2");
+        lld3.addFirst("3");
+
+        System.out.println(lld2.equals(lld3));
     }
 }
